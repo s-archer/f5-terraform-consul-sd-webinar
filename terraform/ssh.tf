@@ -8,7 +8,8 @@ resource "aws_key_pair" "demo" {
 
 resource "null_resource" "key" {
   provisioner "local-exec" {
-    command = "echo \"${tls_private_key.demo.private_key_pem}\" > ${aws_key_pair.demo.key_name}.pem"
+    # command = "echo \"${tls_private_key.demo.private_key_pem}\" > ${aws_key_pair.demo.key_name}.pem"
+    command = "echo \"${tls_private_key.demo.private_key_pem}\" > ssh-key.pem"
   }
 
   provisioner "local-exec" {

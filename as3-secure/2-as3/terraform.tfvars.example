@@ -1,0 +1,7 @@
+address  = "${addr}"
+username = "${username}"
+password = "${pwd}"
+port = "${port}"
+vault-address = "${vault-address}"
+vault-token = "${vault-token}"
+

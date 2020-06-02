@@ -17,3 +17,11 @@ output "F5_UI" {
 output "Consul_UI" {
   value = "http://${aws_instance.consul.public_ip}:8500"
 }
+
+output "Vault_UI" {
+  value = "http://${aws_instance.vault.public_ip}:8200"
+}
+
+output "Vault_SSH" {
+  value = "ssh -i ssh-key.pem ubuntu@${aws_instance.vault.public_ip}"
+}
