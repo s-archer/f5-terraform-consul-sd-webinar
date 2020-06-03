@@ -20,6 +20,10 @@ resource "aws_instance" "f5" {
   key_name                    = "${aws_key_pair.demo.key_name}"
   root_block_device { delete_on_termination = true }
 
+  provisioner "local-exec" {
+    command = "while [[ \"$(curl -skiu ${var.username}:${random_string.password.result} https://${self.public_ip}:${var.port}/mgmt/shared/appsvcs/declare | grep -Eoh \"^HTTP/1.1 204\")\" != \"HTTP/1.1 204\" ]]; do sleep 5; done"
+  }
+  
   tags = {
     Name = "${var.prefix}-f5"
     Env  = "consul"
@@ -28,9 +32,15 @@ resource "aws_instance" "f5" {
 }
 
 data "template_file" "f5_init" {
-  template = "${file("../scripts/f5.tpl")}"
+  template = "${file("../scripts/f5_onboard.tmpl")}"
 
   vars = {
     password = "${random_string.password.result}"
+    DO_URL       = "${var.DO_URL}",
+    AS3_URL      = "${var.AS3_URL}",
+    TS_URL       = "${var.TS_URL}",
+    CFE_URL      = "${var.CFE_URL}",
+    libs_dir     = "${var.libs_dir}",
+    onboard_log  = "${var.onboard_log}",
   }
 }
