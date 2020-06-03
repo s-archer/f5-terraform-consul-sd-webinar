@@ -1,7 +1,15 @@
+data "terraform_remote_state" "aws_demo" {
+  backend = "local"
+
+  config = {
+    path = "${path.module}/../../terraform/terraform.tfstate"
+  }
+}
+
 provider "bigip" {
-  address  = "https://${var.address}:${var.port}"
-  username = "${var.username}"
-  password = "${var.password}"
+  address  = data.terraform_remote_state.aws_demo.outputs.f5_ui
+  username = data.terraform_remote_state.aws_demo.outputs.f5_username
+  password = data.terraform_remote_state.aws_demo.outputs.f5_password
 }
 
 resource "bigip_ltm_virtual_server" "webapp" {
