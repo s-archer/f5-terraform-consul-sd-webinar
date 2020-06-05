@@ -20,6 +20,6 @@ provider "bigip" {
 
 # deploy shared webapp-pool using as3
 resource "bigip_as3" "nginx" {
-  as3_json    = "${file("nginx-pool.json")}"
-  tenant_name = "consul"
+  as3_json    = file("nginx-pool.json")
+  tenant_filter = "consul"
 }

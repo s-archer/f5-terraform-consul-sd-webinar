@@ -14,6 +14,6 @@ provider "bigip" {
 
 # deploy application using as3
 resource "bigip_as3" "nginx" {
-  as3_json    = "${file("nginx.json")}"
+  as3_json    = file("nginx.json")
   tenant_name = "consul_sd"
 }

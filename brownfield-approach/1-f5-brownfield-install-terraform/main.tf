@@ -32,14 +32,14 @@ resource "bigip_ltm_pool" "webapp-pool" {
   name                = "/Common/webapp-pool"
   load_balancing_mode = "round-robin"
   description         = "Pool for webapp manual"
-  monitors            = ["${bigip_ltm_monitor.monitor.name}"]
+  monitors            = [bigip_ltm_monitor.monitor.name]
   allow_snat          = "yes"
   allow_nat           = "yes"
 }
 
 resource "bigip_ltm_node" "node1" {
   name             = "/Common/node1"
-  address          = "10.0.0.79"
+  address          = "10.0.0.101"
   connection_limit = "0"
   dynamic_ratio    = "1"
   monitor          = "/Common/icmp"
@@ -53,7 +53,7 @@ resource "bigip_ltm_node" "node1" {
 
 resource "bigip_ltm_node" "node2" {
   name             = "/Common/node2"
-  address          = "10.0.0.122"
+  address          = "10.0.0.116"
   connection_limit = "0"
   dynamic_ratio    = "1"
   monitor          = "/Common/icmp"
