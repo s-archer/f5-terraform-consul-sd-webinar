@@ -18,7 +18,14 @@ output "consul_ui" {
   value = "http://${aws_instance.consul.public_ip}:8500"
 }
 
-
 output "f5_ssh" {
   value = "ssh admin@${aws_eip.f5.public_ip} -i ${aws_key_pair.demo.key_name}.pem"
+}
+
+output "Vault_UI" {
+  value = "http://${aws_instance.vault.public_ip}:8200"
+}
+
+output "Vault_SSH" {
+  value = "ssh -i ssh-key.pem ubuntu@${aws_instance.vault.public_ip}"
 }

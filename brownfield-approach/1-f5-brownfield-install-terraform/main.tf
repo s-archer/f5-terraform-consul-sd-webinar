@@ -39,7 +39,7 @@ resource "bigip_ltm_pool" "webapp-pool" {
 
 resource "bigip_ltm_node" "node1" {
   name             = "/Common/node1"
-  address          = "10.0.0.44"
+  address          = "10.0.0.79"
   connection_limit = "0"
   dynamic_ratio    = "1"
   monitor          = "/Common/icmp"
@@ -53,7 +53,7 @@ resource "bigip_ltm_node" "node1" {
 
 resource "bigip_ltm_node" "node2" {
   name             = "/Common/node2"
-  address          = "10.0.0.220"
+  address          = "10.0.0.122"
   connection_limit = "0"
   dynamic_ratio    = "1"
   monitor          = "/Common/icmp"
@@ -67,20 +67,12 @@ resource "bigip_ltm_node" "node2" {
 
 resource "bigip_ltm_pool_attachment" "node1-attach" {
   pool = bigip_ltm_pool.webapp-pool.name
-  node = "/Common/node1:80"
-  depends_on = [
-    bigip_ltm_node.node1,
-    bigip_ltm_node.node2
-  ]
+  node = "${bigip_ltm_node.node1.name}:80"
 }
 
 resource "bigip_ltm_pool_attachment" "node2-attach" {
   pool = bigip_ltm_pool.webapp-pool.name
-   node = "/Common/node2:80"
-   depends_on = [
-    bigip_ltm_node.node1,
-    bigip_ltm_node.node2
-  ]
+  node = "${bigip_ltm_node.node2.name}:80"
 }
 
 resource "bigip_ltm_monitor" "monitor" {
