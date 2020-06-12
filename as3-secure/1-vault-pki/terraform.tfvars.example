@@ -1,0 +1,2 @@
+vault-address = "${vault-address}"
+vault-token = "${vault-token}"

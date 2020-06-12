@@ -18,8 +18,12 @@ provider "bigip" {
   password = data.terraform_remote_state.aws_demo.outputs.f5_password
 }
 
-# deploy shared webapp-pool using as3
+# deploy application using as3
 resource "bigip_as3" "nginx" {
-  as3_json    = file("nginx-pool.json")
-  tenant_filter = "consul"
+  # as3_json    = "${file("nginx.json")}"
+  as3_json = templatefile("nginx.tpl", {
+    certificate = jsonencode(vault_pki_secret_backend_cert.f5-cert.certificate),
+    privatekey  = jsonencode(vault_pki_secret_backend_cert.f5-cert.private_key)
+  })
+  tenant_filter = "consul_sd"
 }

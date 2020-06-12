@@ -1,3 +1,5 @@
+variable "vault-address" {}
+variable "vault-token" {}
 variable "address" {}
 variable "port" {}
 variable "username" {}
